@@ -13,3 +13,11 @@ tags:
     name: markdown
   - slug: thoughts
     name: Thoughts
+  - slug: laravel
+    name: Laravel
+  - slug: java
+    name: Java
+  - slug: spring
+    name: Spring
+  - slug: e-government
+    name: E-Government
