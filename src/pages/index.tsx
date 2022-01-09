@@ -3,6 +3,7 @@ import BasicMeta from "../components/meta/BasicMeta";
 import OpenGraphMeta from "../components/meta/OpenGraphMeta";
 import TwitterCardMeta from "../components/meta/TwitterCardMeta";
 import { SocialList } from "../components/SocialList";
+import Instagram from "../assets/instagram-alt.svg";
 
 export default function Index() {
   return (
@@ -13,11 +14,17 @@ export default function Index() {
       <div className="container">
         <div>
           <h1>
-            Hi, I'm Frans Filasta Pratama<span className="fancy">.</span>
+            Hi, I'm Frans FP<span className="fancy">.</span>
           </h1>
-          <span className="handle">@fransfp__</span>
-          <h2>Software engineer and Civil Servant 🇲🇨</h2>
+          <div className="sub">
+            <Instagram width={15} height={15}/>
+            <span className="handle">
+               @fransfp__</span>
+          </div>
+          <h2>Fullstack Software Engineer and a Civil Servant 🇲🇨</h2>
+          
           <SocialList />
+          
         </div>
       </div>
       <style jsx>{`
@@ -43,9 +50,16 @@ export default function Index() {
         }
         .handle {
           display: inline-block;
-          margin-top: 0.275em;
           color: #9b9b9b;
           letter-spacing: 0.05em;
+        }
+
+        .sub{
+          margin-top: 0.275em;
+          display: flex;
+          flex-direction: row;
+          gap: 0.5em;
+          align-items: center;
         }
 
         @media (min-width: 769px) {

@@ -6,6 +6,7 @@ author: fransfp
 tags:
   - laravel
 ---
+
 # **Introduction**
 
 ## Laravel
@@ -49,35 +50,38 @@ I separated this article into three parts. Part 1 will cover laravel setup. Part
    ```shell
    composer create-project laravel/laravel laravel-wso2is
    ```
+
 2. Install laravel-saml2 library. You can read the documentation here. <https://github.com/aacotroneo/laravel-saml2>
 
    ```shell
    composer require aacotroneo/laravel-saml2
    ```
+
 3. Publish laravel-saml2 config file. This will add the files `app/config/saml2_settings.php`& `app/config/saml2/mytestidp1_idp_settings.php`, which you will need to customize.
 
    ```shell
    php artisan vendor:publish --provider="Aacotroneo\Saml2\Saml2ServiceProvider"
    ```
+
 4. Define names of all the IDPs you want to configure in `app/config/saml2_settings.php` . The name of the IDP will show up in the URL used by the Saml2 routes the library makes, as well as internally in the filename for each IDP's config.
 
 ```php
 'idpNames' => ['wso2is'],
 ```
 
-1. Set `$this_idp_env_id = 'WSO2IS'` or any value, then you can set ENV vars starting with `SAML2_WSO2IS_`  respectively.
+5. Set `$this_idp_env_id = 'WSO2IS'` or any value, then you can set ENV vars starting with `SAML2_WSO2IS_`  respectively.
 
 ```php
 SAML2_WSO2IS_IDP_ENTITYID=localhost
 SAML2_WSO2IS_IDP_HOST=https://localhost:9443/samlsso
-SAML2_WSO2IS_IDP_SSO_URL=https://localhost:9443/samlsso 
-SAML2_WSO2IS_IDP_SL_URL=https://localhost:9443/samlsso 
+SAML2_WSO2IS_IDP_SSO_URL=https://localhost:9443/samlsso
+SAML2_WSO2IS_IDP_SL_URL=https://localhost:9443/samlsso
 SAML2_WSO2IS_IDP_x509=file:///var/www/resources/sso/wso2carbon.pem
 SAML2_WSO2IS_SP_ENTITYID=playground
 WSO2IS_USERSTORENAME=PRIMARY
 ```
 
-1. In order to make single logout work properly, I need to extend Saml2Controller which provided by the library.
+6. In order to make single logout work properly, I need to extend Saml2Controller which provided by the library.
 
 ```php
 <?php
@@ -142,6 +146,7 @@ Laravel offers two different authentication mechanism. Using Laravel Fortify you
    php artisan migrate
    php artisan vendor:publish --tag=jetstream-views
    ```
+
 2. Now we’re done setup Laravel Jetstream with Livewire.
 
 ![Untitled](https://how-to-bphn.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F1082462b-4486-4d05-8005-b7537d1ef88d%2FUntitled.png?table=block&id=1f675320-dc77-422f-843d-d475af98af3c&spaceId=d49281f5-4a5a-421a-832f-7bfb00172ba3&width=2000&userId=&cache=v2)
@@ -160,7 +165,7 @@ Make sure you have JDK 8 or 11 installed in your server. If you have it installe
 ./wso2server.sh start
 ```
 
-1. Create new Service Provider
+2. Create new Service Provider
 
 ![Untitled](https://how-to-bphn.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F21969531-f73c-4a2d-a9ee-66fbcfa46b56%2FUntitled.png?table=block&id=942a0d2b-bbe1-4e0a-ab42-06210fb8ebbd&spaceId=d49281f5-4a5a-421a-832f-7bfb00172ba3&width=2000&userId=&cache=v2)
 
@@ -170,9 +175,9 @@ Click register to add new service provider. The service provider screen will app
 
 We need to upload certificate. Follow the steps bellow.
 
-* Go to the folder within the WSO2 Identity Server version */repository/resources/security*
-* Open a terminal and execute the following commands to export the keystone certificate.
-* The exported certificate will be in binary format.
+- Go to the folder within the WSO2 Identity Server version */repository/resources/security*
+- Open a terminal and execute the following commands to export the keystone certificate.
+- The exported certificate will be in binary format.
 
 ```shell
 keytool -export -keystore wso2carbon.jks -alias wso2carbon -file wso2carbon.crt
@@ -184,15 +189,15 @@ Convert the previous binary encrypted certificate to a PEM encrypted certificate
 openssl x509 -inform der -in wso2carbon.crt -out wso2carbon.pem
 ```
 
-* Upload pem file to service provider.
+- Upload pem file to service provider.
 
 ![Untitled](https://how-to-bphn.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F657ffbbe-18d8-4240-95ad-5907c66abcc9%2FUntitled.png?table=block&id=162186dc-5d9e-4039-8f78-ef8800c0f8ca&spaceId=d49281f5-4a5a-421a-832f-7bfb00172ba3&width=2000&userId=&cache=v2)
 
-* Claim configuration : wso2 local claim will be used. Givenname and emailaddress need to be added.
+- Claim configuration : wso2 local claim will be used. Givenname and emailaddress need to be added.
 
 ![Untitled](https://how-to-bphn.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fc65a21bf-b3c1-4561-913c-d5f2227fa651%2FUntitled.png?table=block&id=3025bcf3-bf7b-404b-89dc-cb8cbf4b4f0b&spaceId=d49281f5-4a5a-421a-832f-7bfb00172ba3&width=2000&userId=&cache=v2)
 
-* Inbound Authentication Configuration: the responsibility of the inbound authenticator component is to identify and analyze all inbound authentication requests and then generate the corresponding response.
+- Inbound Authentication Configuration: the responsibility of the inbound authenticator component is to identify and analyze all inbound authentication requests and then generate the corresponding response.
 
   To configure Inbound Authentication, on SAML2 Web SSO Section click on the Configure button, which will redirect you to the form that will request the information necessary to establish the connection between WSO2 Identity Server and the application that has been previously generated.
 
@@ -210,21 +215,21 @@ openssl x509 -inform der -in wso2carbon.crt -out wso2carbon.pem
 
   First, create new user in WSO2 Management Console. To create new user in WSO2 ,the following steps must be followed:
 
-  * Click on Add, under Users and Roles.
-  * Click on Add New User, on the page where the console was redirected.
-  * You will be asked to fill out a form which contains basic user information, such as Username and Password
+  - Click on Add, under Users and Roles.
+  - Click on Add New User, on the page where the console was redirected.
+  - You will be asked to fill out a form which contains basic user information, such as Username and Password
 
   ![Untitled](https://how-to-bphn.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F7154c21a-ac7c-4279-8c48-33470d8dc680%2FUntitled.png?table=block&id=03bf9224-e97b-453a-a11a-4e32c24d557d&spaceId=d49281f5-4a5a-421a-832f-7bfb00172ba3&width=2000&userId=&cache=v2)
 
-  * Click finish.
+  - Click finish.
 
   ![Untitled](https://how-to-bphn.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F989226c4-2620-4ac5-839f-a13dce69c2c3%2FUntitled.png?table=block&id=ff8d2e1a-d456-4b3a-b035-ab99c0490ed8&spaceId=d49281f5-4a5a-421a-832f-7bfb00172ba3&width=1800&userId=&cache=v2)
 
-  * Fill some field in User Profile
+  - Fill some field in User Profile
 
   ![Untitled](https://how-to-bphn.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fdf28b304-c5b4-4c19-81c3-15654ae1547f%2FUntitled.png?table=block&id=e66836a3-3eb5-43ec-9ec9-75d3596ed0c5&spaceId=d49281f5-4a5a-421a-832f-7bfb00172ba3&width=2000&userId=&cache=v2)
 
-  * Create Event Listener to catch “logged in” event from WSO2 IS. Add this code to app\Providers\EventServiceProvider.php
+  - Create Event Listener to catch “logged in” event from WSO2 IS. Add this code to app\Providers\EventServiceProvider.php
 
   ```php
   <?php
@@ -280,7 +285,7 @@ openssl x509 -inform der -in wso2carbon.crt -out wso2carbon.pem
   }
   ```
 
-  * Create an action class to “synchronize” laravel user with WSO2 IS user. Create class in **app/actions** folder.
+  - Create an action class to “synchronize” laravel user with WSO2 IS user. Create class in **app/actions** folder.
 
   ```php
   <?php
@@ -294,7 +299,7 @@ openssl x509 -inform der -in wso2carbon.crt -out wso2carbon.pem
   use Illuminate\Support\Facades\Hash;
 
   /**
-   * 
+   *
    * @package App\Actions
    */
   class SyncUserFromWSO2
@@ -315,10 +320,10 @@ openssl x509 -inform der -in wso2carbon.crt -out wso2carbon.pem
 
       /**
        * Check if user already exists
-       * 
-       * 
-       * @param string $email 
-       * @return bool 
+       *
+       *
+       * @param string $email
+       * @return bool
        */
       public function isExistingUser(string $email)
       {
@@ -332,10 +337,10 @@ openssl x509 -inform der -in wso2carbon.crt -out wso2carbon.pem
 
 
       /**
-       * 
-       * @param Saml2User $saml2User 
-       * @return mixed 
-       * @throws BindingResolutionException 
+       *
+       * @param Saml2User $saml2User
+       * @return mixed
+       * @throws BindingResolutionException
        */
       public function create(Saml2User $saml2User)
       {
@@ -395,86 +400,86 @@ openssl x509 -inform der -in wso2carbon.crt -out wso2carbon.pem
 
       /**
        * Role claim
-       * 
+       *
        * @var string
        */
       public static string $ROLE = "http://wso2.org/claims/role";
 
       /**
-       * 
-       * 
-       * 
+       *
+       *
+       *
        * @var string
        */
       public static string $DEPARTMENT = "http://wso2.org/claims/department";
 
       /**
        * Email Address
-       * 
+       *
        * @var string
        */
       public static string $EMAIL_ADDRESS = "http://wso2.org/claims/emailaddress";
 
       /**
-       * 
+       *
        * Lastname
-       * 
+       *
        * @var string
        */
       public static string $LAST_NAME = "http://wso2.org/claims/lastname";
 
       /**
        * Fullname
-       * 
+       *
        * @var string
        */
       public static string $GIVEN_NAME = "http://wso2.org/claims/givenname";
 
 
       /**
-       * 
+       *
        * @var string
        */
       public static string $USER_PRINCIPAL = "http://wso2.org/claims/userprincipal";
 
 
       /**
-       * 
+       *
        * @var string
        */
       public static string $IS_READONLY_USER = "http://wso2.org/claims/identity/isReadOnlyUser";
 
 
       /**
-       * 
+       *
        * @var string
        */
       public static string $MODIFIED = "http://wso2.org/claims/modified";
 
 
       /**
-       * 
+       *
        * @var string
        */
       public static string $FULL_NAME = "http://wso2.org/claims/fullname";
 
 
       /**
-       * 
+       *
        * @var string
        */
       public static string $CREATED = "http://wso2.org/claims/created";
 
 
       /**
-       * 
+       *
        * @var string
        */
       public static string $RESOURCE_TYPE = "http://wso2.org/claims/resourceType";
 
 
       /**
-       * 
+       *
        * @var string
        */
       public static string $USERID = "http://wso2.org/claims/userid";
@@ -491,7 +496,7 @@ openssl x509 -inform der -in wso2carbon.crt -out wso2carbon.pem
   "routesMiddleware" => ["saml"],
   ```
 
-  * Then create new middleware entry at app\Http\Kernel.php
+  - Then create new middleware entry at app\Http\Kernel.php
 
   ```php
   <?php
@@ -508,13 +513,13 @@ openssl x509 -inform der -in wso2carbon.crt -out wso2carbon.pem
 
   Now this Laravel Application will generate session for authenticated user correctly. BUT We are not done yet. Many time your user maybe authenticated on other service provider in your organization. In this case laravel should ask WSO2 IS first wether the users is authenticated or not. If authenticated then we should bypass them.
 
-  * Create new middleware by using this command :
+  - Create new middleware by using this command :
 
   ```shell
   php artisan make:middleware Saml2Authenticate
   ```
 
-  * Open the file and add code bellow :
+  - Open the file and add code bellow :
 
   ```php
   <?php
@@ -562,7 +567,7 @@ openssl x509 -inform der -in wso2carbon.crt -out wso2carbon.pem
   }
   ```
 
-  * Then register this new middleware to app\Http\Kernel.php
+  - Then register this new middleware to app\Http\Kernel.php
 
   ```php
   <?php
@@ -575,7 +580,7 @@ openssl x509 -inform der -in wso2carbon.crt -out wso2carbon.pem
   ];
   ```
 
-  * Apply the middleware to your routes/web.php.
+  - Apply the middleware to your routes/web.php.
 
   ```php
   <?php
