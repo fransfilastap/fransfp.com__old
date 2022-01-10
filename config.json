@@ -1,16 +1,37 @@
 {
-  "base_url": "https://wutali-nextjs-netlify-blog.netlify.app",
+  "base_url": "https://fransfp.com",
   "site_title": "FransFP Blog",
   "site_description": "Explore and you'll know more",
   "site_keywords": [
     {
-      "keyword": "Next.js"
+      "keyword": "Software Engineer"
     },
     {
-      "keyword": "Netlify"
+      "keyword": "Software Developer"
     },
     {
       "keyword": "React"
+    },
+    {
+      "keyword": "Laravel"
+    },
+    {
+      "keyword": "Spring Boot"
+    },
+    {
+      "keyword": "Spring"
+    },
+    {
+      "keyword": "Java"
+    },
+    {
+      "keyword": "JavaScript"
+    },
+    {
+      "keyword": "NodeJS"
+    },
+    {
+      "keyword": "e-gov"
     }
   ],
   "posts_per_page": 5,

@@ -21,7 +21,7 @@ export default function Index() {
             <span className="handle">
                @fransfp__</span>
           </div>
-          <h2>Fullstack Software Engineer and a Civil Servant 🇲🇨</h2>
+          <h2>Full stack developer and a Civil Servant 🇲🇨</h2>
           
           <SocialList />
           
