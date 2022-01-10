@@ -18,6 +18,9 @@ export default function PostItem({ post }: Props) {
               color: #222;
               display: inline-block;
             }
+            a:hover {
+              color: #E60576;
+            }
             h2 {
               margin: 0;
               font-weight: 500;

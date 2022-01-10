@@ -58,13 +58,14 @@ export default function Navigation() {
             li {
               margin-bottom: 1.75rem;
               font-size: 2rem;
+              font-weight: 500;
               padding: 0 1.5rem 0 0;
             }
             li:last-child {
               margin-bottom: 0;
             }
             .active {
-              color: #222;
+              color: #E60576;
             }
 
             @media (min-width: 769px) {
