@@ -13,7 +13,7 @@ export function SocialList({}) {
         target="_blank"
         rel="noopener"
       >
-        <LinkedIn width={24} height={24} fill={"#222"} />
+        <LinkedIn width={32} height={32} fill={"#222"} />
       </a>
       <a
         title="Twitter"

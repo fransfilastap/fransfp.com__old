@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://fransfp.com
+
+# Sitemaps
+Sitemap: https://fransfp.com/sitemap.xml
