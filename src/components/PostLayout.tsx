@@ -13,6 +13,7 @@ import TagButton from "./TagButton";
 import { getAuthor } from "../lib/authors";
 import { getTag } from "../lib/tags";
 
+
 type Props = {
   title: string;
   date: Date;
@@ -33,6 +34,8 @@ export default function PostLayout({
 }: Props) {
   const keywords = tags.map(it => getTag(it).name);
   const authorName = getAuthor(author).name;
+  const url = process.env.NEXT_SITE_URL + '/posts/' + slug;
+  const DISQUS_NAME = process.env.DISQUS_NAME;
   return (
     <Layout>
       <BasicMeta
@@ -81,6 +84,7 @@ export default function PostLayout({
             ))}
           </ul>
         </article>
+        <div id="disqus_thread"></div>
         <footer>
           <div className={"social-list"}>
             <SocialList />
@@ -233,6 +237,23 @@ export default function PostLayout({
             }
           `}
       </style>
+      <div id="disqus_thread"></div>
+      <script
+          dangerouslySetInnerHTML={{
+          __html: `
+            var disqus_config = function () {
+              this.page.url = '${url}';
+              this.page.identifier = '${slug}'; 
+            };
+            (function() {
+              var d = document, s = d.createElement('script');
+              s.src = '${DISQUS_NAME}' + '.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+            })();
+          `,
+          }}
+      />      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </Layout>
   );
 }
